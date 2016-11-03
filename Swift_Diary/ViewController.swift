@@ -8,9 +8,31 @@
 
 import UIKit
 
+/// 枚举
+enum Rank: Int {
+    case Ace = 1
+    case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+    case Jack, Queen, King
+    func simpleDescription() -> String {
+        switch self {
+        case .Ace:
+            return "ace"
+        case .Jack:
+            return "jack"
+        case .Queen:
+            return "queen"
+        case .King:
+            return "king"
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+
+
+
 class ViewController: UIViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -23,6 +45,8 @@ class ViewController: UIViewController {
         controlFlow()
         
         methodClosure()
+        
+        classAndObject()
     }
     
     /// 基础部分
@@ -308,6 +332,178 @@ class ViewController: UIViewController {
         let sortedNumbers = numbers.sorted { $0 > $1 }
         debugPrint(sortedNumbers)
     }
+    
+    /// 类和方法
+    func classAndObject() {
+        
+        // 关于类的一些补充
+        let person = Person.init(name: "ash")
+        Person.showClassName()
+        
+        //打印用法跟OC的一样，只是后面会有一个变量，可以不写
+        NSLog("ssss %@", person.name)
+        
+        let record = Record.init(data: ["name":"kenshin","sex":"male"])
+        // 重写了下标脚本
+        debugPrint("record[0] == \(record[0])") //结果：r[0]=kenshin
+        record["sex"] = "female"
+        debugPrint("record[1] == \(record[1])") //结果：female
+        
+        let s = Student.init(firstName: "ash", lastName: "222", score: 33)
+        s.firstName="kenshin"
+        s.showMessage()
+        debugPrint("fullName == \(s.fullName)")
+        
+        class Shape {
+            var numberOfSides = 0
+            func simpleDescription() -> String {
+                return "A shape with \(numberOfSides) sides."
+            }
+            var name: String
+            init(name: String) {
+                self.name = name
+            }
+        }
+        //使用 class 和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是 类。同样，方法和函数声明也一样。
+        
+        let shape = Shape.init(name: "ash")
+        shape.numberOfSides = 7
+        _ = shape.simpleDescription()
+        /*
+        注意 self 被用来区别实例变量。当你创建实例的时候，像传入函数参数一样给类传入构造器的参数。每个属性都 需要赋值——无论是通过声明(就像 numberOfSides )还是通过构造器(就像 name )。
+        如果你需要在删除对象之前进行一些清理工作，使用 deinit 创建一个析构函数。 子类的定义方法是在它们的类名后面加上父类的名字，用冒号分割。创建类的时候并不需要一个标准的根类，所
+        以你可以忽略父类。
+        子类如果要重写父类的方法的话，需要用 override 标记——如果没有添加 override 就重写父类方法的话编译器 会报错。编译器同样会检测 override 标记的方法是否确实在父类中。
+         */
+        
+        class Square: Shape {
+            var sideLength: Double = 0.0
+            init(sideLength: Double, name: String) {
+                self.sideLength = sideLength
+                super.init(name: name)
+                numberOfSides = 4
+            }
+            
+            //注意设置默认值0.0时监视器不会被调用
+            var balance:Double=1.0{
+                willSet{
+                    self.balance=2.0
+                    //注意newValue可以使用自定义值,并且在属性监视器内部调用属性不会引起监视器循环调用,注意此时修改balance的值没有用
+                    debugPrint("Square.balance willSet,newValue=\(newValue),value=\(self.balance)")
+                }
+                didSet{
+                    self.balance=3.0
+                    //注意oldValue可以使用自定义值,并且在属性监视器内部调用属性不会引起监视器循环调用，注意此时修改balance的值将作为最终结果
+                    debugPrint("Square.balance didSet,oldValue=\(oldValue),value=\(self.balance)")
+                }
+            }
+            
+            func area() ->  Double {
+                return sideLength * sideLength
+            }
+            
+            /// 重写父类的方法，需要加上 override
+            override func simpleDescription() -> String {
+                return "A square with sides of length \(sideLength)."
+            }
+            //除了储存简单的属性之外，属性可以有 getter 和 setter 。
+            var perimeter: Double {
+                get {
+                    return 3.0 * sideLength
+                }set {
+                    sideLength = newValue / 3.0
+                }
+            }
+        }
+        
+        let square = Square.init(sideLength: 3.1, name: "a dog")
+        debugPrint("perimeter == \(square.perimeter)")//get
+        square.perimeter = 9.9//set
+        debugPrint("perimeter == \(square.sideLength)")
+        /*
+         在 perimeter 的 setter 中，新值的名字是 newValue 。你可以在 set 之后显式的设置一个名字。 注意 EquilateralTriangle 类的构造器执行了三步:
+         1. 设置子类声明的属性值
+         2. 调用父类的构造器
+         3. 改变父类定义的属性值。其他的工作比如调用方法、getters 和 setters 也可以在这个阶段完成。
+         如果你不需要计算属性，但是仍然需要在设置一个新值之前或者之后运行代码，使用 willSet 和 didSet 。
+         */
+        
+        //处理变量的可选值时，你可以在操作(比如方法、属性和子脚本)之前加 ? 。如果 ? 之前的值是 nil ， ? 后面 的东西都会被忽略，并且整个表达式返回 nil 。否则， ? 之后的东西都会被运行。在这两种情况下，整个表达式 的值也是一个可选值。
+        
+        let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+        _ = optionalSquare?.sideLength
+        
+        
+        // 枚举和结构体
+        let ace = Rank.Ace
+        let aceRawValue = ace.rawValue
+        //默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在 上面的例子中， Ace 被显式赋值为 1，并且剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为 枚举的原始值。使用 rawValue 属性来访问一个枚举成员的原始值。
+
+        //使用 init?(rawValue:) 初始化构造器在原始值和枚举值之间进行转换。
+        if let convertedRank = Rank(rawValue: 3) {
+            let threeDescription = convertedRank.simpleDescription()
+            
+            debugPrint("aceRawValue == \(aceRawValue),threeDescription == \(threeDescription)")
+        }
+        
+        //枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，如果没有比较有意义的原始值，你就不需要
+        //提供原始值。
+        enum Suit {
+            case Spades, Hearts, Diamonds, Clubs
+            func simpleDescription() -> String {
+                switch self {
+                case .Spades:
+                    return "spades"
+                case .Hearts:
+                    return "hearts"
+                case .Diamonds:
+                    return "diamonds"
+                case .Clubs:
+                    return "clubs"
+                }
+            }
+        }
+        let hearts = Suit.Hearts
+        _ = hearts.simpleDescription()
+//        let heartsValue = hearts.rawValue 这个会编译报错
+        
+        /*
+         注意，有两种方式可以引用 Hearts 成员:给 hearts 常量赋值时，枚举成员 Suit.Hearts 需要用全名来引用，因 为常量没有显式指定类型。在 switch 里，枚举成员使用缩写 .Hearts 来引用，因为 self 的值已经知道是一个 suit 。已知变量类型的情况下你可以使用缩写。
+         */
+        
+        //使用 struct 来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就 是结构体是传值，类是传引用。
+        struct Card {
+            var rank: Rank
+            var suit: Suit
+            func simpleDescription() -> String {
+                return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+            }
+        }
+        let threeOfSpades = Card.init(rank: .Three, suit: .Spades)
+        let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+        debugPrint("threeOfSpadesDescription == \(threeOfSpadesDescription)")
+        
+        /*
+         一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值
+         和原始值是不同的:枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
+         */
+        enum ServerResponse {
+            case Result(String, String)
+            case Failure(String)
+        }
+        let success = ServerResponse.Result("6:00 am", "8:09 pm")
+        _ = ServerResponse.Failure("Out of cheese.")
+        
+        switch success {
+        case let .Result(sunrise, sunset):
+            let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+            debugPrint("serverResponse == \(serverResponse)")
+        case let .Failure(message):
+            debugPrint("Failure...  \(message)")
+        }
+    }
+    //属性的懒加载，第一次访问才会计算初始值，在Swift中懒加载的属性不一定就是对象类型，也可以是基本类型
+    lazy var baseClass = BaseClass()
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

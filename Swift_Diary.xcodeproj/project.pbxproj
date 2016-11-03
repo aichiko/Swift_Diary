@@ -14,6 +14,7 @@
 		D5FB3A6A1DC86BC700A81173 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB3A681DC86BC700A81173 /* LaunchScreen.storyboard */; };
 		D5FB3A751DC86BC700A81173 /* Swift_DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A741DC86BC700A81173 /* Swift_DiaryTests.swift */; };
 		D5FB3A801DC86BC700A81173 /* Swift_DiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A7F1DC86BC700A81173 /* Swift_DiaryUITests.swift */; };
+		D5FB3A8E1DC9EF0100A81173 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A8D1DC9EF0100A81173 /* BaseClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		D5FB3A7B1DC86BC700A81173 /* Swift_DiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Swift_DiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FB3A7F1DC86BC700A81173 /* Swift_DiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_DiaryUITests.swift; sourceTree = "<group>"; };
 		D5FB3A811DC86BC700A81173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5FB3A8D1DC9EF0100A81173 /* BaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */,
 				D5FB3A611DC86BC700A81173 /* ViewController.swift */,
+				D5FB3A8D1DC9EF0100A81173 /* BaseClass.swift */,
 				D5FB3A631DC86BC700A81173 /* Main.storyboard */,
 				D5FB3A661DC86BC700A81173 /* Assets.xcassets */,
 				D5FB3A681DC86BC700A81173 /* LaunchScreen.storyboard */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */,
+				D5FB3A8E1DC9EF0100A81173 /* BaseClass.swift in Sources */,
 				D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +511,7 @@
 				D5FB3A861DC86BC700A81173 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5FB3A871DC86BC700A81173 /* Build configuration list for PBXNativeTarget "Swift_DiaryTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +520,7 @@
 				D5FB3A891DC86BC700A81173 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5FB3A8A1DC86BC700A81173 /* Build configuration list for PBXNativeTarget "Swift_DiaryUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +529,7 @@
 				D5FB3A8C1DC86BC700A81173 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
