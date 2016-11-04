@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D5179C931DCC125E008F39EA /* ProtocolExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C921DCC125E008F39EA /* ProtocolExample.swift */; };
+		D5179C951DCC1C0D008F39EA /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */; };
 		D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */; };
 		D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A611DC86BC700A81173 /* ViewController.swift */; };
 		D5FB3A651DC86BC700A81173 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB3A631DC86BC700A81173 /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D5179C921DCC125E008F39EA /* ProtocolExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolExample.swift; sourceTree = "<group>"; };
+		D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
 		D5FB3A5C1DC86BC700A81173 /* Swift_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swift_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5FB3A611DC86BC700A81173 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +105,9 @@
 			children = (
 				D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */,
 				D5FB3A611DC86BC700A81173 /* ViewController.swift */,
+				D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */,
 				D5FB3A8D1DC9EF0100A81173 /* BaseClass.swift */,
+				D5179C921DCC125E008F39EA /* ProtocolExample.swift */,
 				D5FB3A631DC86BC700A81173 /* Main.storyboard */,
 				D5FB3A661DC86BC700A81173 /* Assets.xcassets */,
 				D5FB3A681DC86BC700A81173 /* LaunchScreen.storyboard */,
@@ -263,7 +269,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */,
+				D5179C951DCC1C0D008F39EA /* ProtocolViewController.swift in Sources */,
 				D5FB3A8E1DC9EF0100A81173 /* BaseClass.swift in Sources */,
+				D5179C931DCC125E008F39EA /* ProtocolExample.swift in Sources */,
 				D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

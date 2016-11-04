@@ -9,7 +9,7 @@
 import UIKit
 
 /// 枚举
-enum Rank: Int {
+private enum Rank: Int {
     case Ace = 1
     case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
     case Jack, Queen, King
@@ -47,6 +47,14 @@ class ViewController: UIViewController {
         methodClosure()
         
         classAndObject()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .action, target: self, action:#selector(barButtonAction(button:)))
+    }
+    
+    func barButtonAction(button: UIBarButtonItem) {
+        //debugPrint(button)
+        let vc = ProtocolViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 基础部分
@@ -134,11 +142,13 @@ class ViewController: UIViewController {
             debugPrint("i=\(i)")
         }
         
-        //var str:String = "hello world!"
-        //let range = "a"..."z"
-        //        for var t in str {
-        //
-        //        }
+        var str:String = "hello world!"
+        let range = "a"..."z"
+        for character in str.characters {
+            if range.contains(String(character)) {
+                print(character) //结果：helloworld
+            }
+        }
         
         //空合运算符（Nil Coalescing Operator）
         let defaultColorName = "red"
@@ -339,7 +349,6 @@ class ViewController: UIViewController {
         // 关于类的一些补充
         let person = Person.init(name: "ash")
         Person.showClassName()
-        
         //打印用法跟OC的一样，只是后面会有一个变量，可以不写
         NSLog("ssss %@", person.name)
         
