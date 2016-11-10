@@ -159,3 +159,30 @@ class Student: People {
  常量属性必须默认指定初始值或者在当前类的构造方法中初始化，不能在子类构造方法中初始化；
  */
 
+
+//闭包引起的循环强引用
+//下面这种写法会造成强引用
+
+class HTMLElement {
+    let name: String
+    let text: String?
+    
+    lazy var asHTML: (Void) -> String = {
+        [unowned self] in//解决闭包引起的循环强引用
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
+
+

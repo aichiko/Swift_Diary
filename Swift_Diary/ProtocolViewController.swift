@@ -129,6 +129,23 @@ class ProtocolViewController: UIViewController {
          • 一个可选值现在是 nil ，但是后面的代码运行需要一个非 nil 值。
          */
         
+        //闭包引起的循环强引用
+        
+        let heading = HTMLElement(name: "ash")
+        let defaultText = "some default text"
+        
+        heading.asHTML = {
+            return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+        }
+        debugPrint(heading.asHTML)
+ 
+        //运行了asHtml 导致造成了强引用。
+        
+        var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+        debugPrint(paragraph!.asHTML())
+        // 打印 “<p>hello, world</p>”
+        paragraph = nil
+        
     }
     //使用 throw 来抛出一个错误并使用 throws 来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函 数会立刻返回并且调用该函数的代码会进行错误处理。
     func sendToPrinter(_ printerName: String) throws -> String {
@@ -138,8 +155,9 @@ class ProtocolViewController: UIViewController {
         return "Job send"
     }
     
-    
-    
+    deinit {
+        debugPrint("\(self) is being deinitialized")
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
