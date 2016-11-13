@@ -146,8 +146,10 @@ class ProtocolViewController: UIViewController {
         // 打印 “<p>hello, world</p>”
         paragraph = nil
         
+        _ = #selector(sendToPrinter(_:))
     }
     //使用 throw 来抛出一个错误并使用 throws 来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函 数会立刻返回并且调用该函数的代码会进行错误处理。
+    @discardableResult
     func sendToPrinter(_ printerName: String) throws -> String {
         if printerName == "Never Has Toner" {
             throw PrinterError.NoToner

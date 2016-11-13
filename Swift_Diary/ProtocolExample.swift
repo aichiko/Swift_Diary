@@ -116,3 +116,26 @@ struct Stack<Element>: Container {
         return items[i]
     }
 }
+
+//where 语句 让你能够为泛型函数或泛型类型的类型参数定义一些强制要求。
+func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anyContainer: C2) ->Bool
+    where C1.ItemType == C2.ItemType,  C1.ItemType: Equatable {
+        // 检查两个容器含有相同数量的元素
+        if someContainer.count != anyContainer.count {
+            return false
+        }
+        
+        // 检查每一对元素是否相等
+        for i in 0..<someContainer.count {
+            if someContainer[i] != anyContainer[i] {
+                return false
+            }
+        }
+        
+        return true
+}
+
+/*
+ 这个函数的类型参数列表还定义了对两个类型参数的要求:
+
+ */
