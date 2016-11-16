@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		095033994AEB6C527FB0437E /* libPods-Swift_Diary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */; };
 		D5179C931DCC125E008F39EA /* ProtocolExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C921DCC125E008F39EA /* ProtocolExample.swift */; };
 		D5179C951DCC1C0D008F39EA /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */; };
 		D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */; };
@@ -37,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Swift_Diary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		104608C6F6BD21B210114E12 /* Pods-Swift_Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.debug.xcconfig"; sourceTree = "<group>"; };
+		1E0CBE4866F7180B6D3585C0 /* Pods-Swift_Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.release.xcconfig"; sourceTree = "<group>"; };
 		D5179C921DCC125E008F39EA /* ProtocolExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolExample.swift; sourceTree = "<group>"; };
 		D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
 		D5FB3A5C1DC86BC700A81173 /* Swift_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swift_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				095033994AEB6C527FB0437E /* libPods-Swift_Diary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +85,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		558EF8B6193630DD6A657449 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				104608C6F6BD21B210114E12 /* Pods-Swift_Diary.debug.xcconfig */,
+				1E0CBE4866F7180B6D3585C0 /* Pods-Swift_Diary.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AE02486142478BEF5428D49B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D5FB3A531DC86BC700A81173 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +109,8 @@
 				D5FB3A731DC86BC700A81173 /* Swift_DiaryTests */,
 				D5FB3A7E1DC86BC700A81173 /* Swift_DiaryUITests */,
 				D5FB3A5D1DC86BC700A81173 /* Products */,
+				558EF8B6193630DD6A657449 /* Pods */,
+				AE02486142478BEF5428D49B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,9 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5FB3A841DC86BC700A81173 /* Build configuration list for PBXNativeTarget "Swift_Diary" */;
 			buildPhases = (
+				0C197D8612578C0CB60EEAC5 /* [CP] Check Pods Manifest.lock */,
 				D5FB3A581DC86BC700A81173 /* Sources */,
 				D5FB3A591DC86BC700A81173 /* Frameworks */,
 				D5FB3A5A1DC86BC700A81173 /* Resources */,
+				5F958F15F4F0E78C3FE972F6 /* [CP] Embed Pods Frameworks */,
+				7DD34DACAD32471FE5B8668F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -262,6 +289,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0C197D8612578C0CB60EEAC5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5F958F15F4F0E78C3FE972F6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7DD34DACAD32471FE5B8668F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5FB3A581DC86BC700A81173 /* Sources */ = {
@@ -420,6 +495,7 @@
 		};
 		D5FB3A851DC86BC700A81173 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 104608C6F6BD21B210114E12 /* Pods-Swift_Diary.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -434,6 +510,7 @@
 		};
 		D5FB3A861DC86BC700A81173 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E0CBE4866F7180B6D3585C0 /* Pods-Swift_Diary.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
