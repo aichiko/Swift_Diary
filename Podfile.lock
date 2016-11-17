@@ -1,35 +1,33 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
-    - AFNetworking/NSURLSession
-  - ReactiveCocoa (2.5):
-    - ReactiveCocoa/UI (= 2.5)
-  - ReactiveCocoa/Core (2.5):
-    - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.5)
-  - ReactiveCocoa/UI (2.5):
-    - ReactiveCocoa/Core
+  - Alamofire (4.0.1)
+  - ReactiveCocoa (5.0.0-alpha.3):
+    - ReactiveSwift (~> 1.0.0-alpha.3)
+  - ReactiveSwift (1.0.0-alpha.3):
+    - Result (~> 3.0)
+  - Result (3.0.0)
+  - SnapKit (3.0.2)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0)
-  - ReactiveCocoa
+  - Alamofire (~> 4.0)
+  - ReactiveCocoa (from `https://github.com/ReactiveCocoa/ReactiveCocoa.git`)
+  - SnapKit (~> 3.0.2)
+
+EXTERNAL SOURCES:
+  ReactiveCocoa:
+    :git: https://github.com/ReactiveCocoa/ReactiveCocoa.git
+
+CHECKOUT OPTIONS:
+  ReactiveCocoa:
+    :commit: e13c94951d78d6d6aa587027b82372c9dcd599ff
+    :git: https://github.com/ReactiveCocoa/ReactiveCocoa.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  ReactiveCocoa: 96e5ddab6fef4ca4a9759572490acec75f7b6d1d
+  ReactiveSwift: d67b677f9574ba614d94022a88fcf456e77fa515
+  Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
 
-PODFILE CHECKSUM: '0512369e7e5c5f8d9daecf0956c9d6a7c2f6ee0e'
+PODFILE CHECKSUM: 18867e5b9ec870dc064135f4faa4463461184580
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

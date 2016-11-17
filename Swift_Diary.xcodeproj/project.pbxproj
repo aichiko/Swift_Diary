@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		095033994AEB6C527FB0437E /* libPods-Swift_Diary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */; };
+		2FF3B9B22273BD7A8103E874 /* Pods_Swift_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A451F5AAEC6229656250E84 /* Pods_Swift_Diary.framework */; };
 		D5179C931DCC125E008F39EA /* ProtocolExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C921DCC125E008F39EA /* ProtocolExample.swift */; };
 		D5179C951DCC1C0D008F39EA /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */; };
+		D53D8EE11DDC025F00FD089F /* NetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D8EE01DDC025F00FD089F /* NetViewController.swift */; };
+		D53D8EE31DDC285700FD089F /* RACViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D8EE21DDC285700FD089F /* RACViewController.swift */; };
 		D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */; };
 		D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A611DC86BC700A81173 /* ViewController.swift */; };
 		D5FB3A651DC86BC700A81173 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB3A631DC86BC700A81173 /* Main.storyboard */; };
@@ -38,11 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Swift_Diary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		104608C6F6BD21B210114E12 /* Pods-Swift_Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.debug.xcconfig"; sourceTree = "<group>"; };
 		1E0CBE4866F7180B6D3585C0 /* Pods-Swift_Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.release.xcconfig"; sourceTree = "<group>"; };
+		4A451F5AAEC6229656250E84 /* Pods_Swift_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5179C921DCC125E008F39EA /* ProtocolExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolExample.swift; sourceTree = "<group>"; };
 		D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
+		D53D8EE01DDC025F00FD089F /* NetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetViewController.swift; sourceTree = "<group>"; };
+		D53D8EE21DDC285700FD089F /* RACViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RACViewController.swift; sourceTree = "<group>"; };
 		D5FB3A5C1DC86BC700A81173 /* Swift_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swift_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5FB3A611DC86BC700A81173 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				095033994AEB6C527FB0437E /* libPods-Swift_Diary.a in Frameworks */,
+				2FF3B9B22273BD7A8103E874 /* Pods_Swift_Diary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +101,7 @@
 		AE02486142478BEF5428D49B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				080285A51DEBCE35CFF329EE /* libPods-Swift_Diary.a */,
+				4A451F5AAEC6229656250E84 /* Pods_Swift_Diary.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,6 +133,8 @@
 			children = (
 				D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */,
 				D5FB3A611DC86BC700A81173 /* ViewController.swift */,
+				D53D8EE01DDC025F00FD089F /* NetViewController.swift */,
+				D53D8EE21DDC285700FD089F /* RACViewController.swift */,
 				D5179C941DCC1C0D008F39EA /* ProtocolViewController.swift */,
 				D5FB3A8D1DC9EF0100A81173 /* BaseClass.swift */,
 				D5179C921DCC125E008F39EA /* ProtocolExample.swift */,
@@ -303,7 +309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5F958F15F4F0E78C3FE972F6 /* [CP] Embed Pods Frameworks */ = {
@@ -347,7 +353,9 @@
 				D5179C951DCC1C0D008F39EA /* ProtocolViewController.swift in Sources */,
 				D5FB3A8E1DC9EF0100A81173 /* BaseClass.swift in Sources */,
 				D5179C931DCC125E008F39EA /* ProtocolExample.swift in Sources */,
+				D53D8EE31DDC285700FD089F /* RACViewController.swift in Sources */,
 				D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */,
+				D53D8EE11DDC025F00FD089F /* NetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +509,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Swift_Diary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ash.Swift-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -516,6 +525,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Swift_Diary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ash.Swift-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";

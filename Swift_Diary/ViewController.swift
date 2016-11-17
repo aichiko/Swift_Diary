@@ -31,8 +31,32 @@ private enum Rank: Int {
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    lazy var dataArray = ["swift_Networking", "swift_RAC", "333"]
+    @available(iOS 2.0, *)
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataArray.count
+    }
 
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        if cell == nil {
+            cell = UITableViewCell.init(style: .default, reuseIdentifier: "cell")
+        }
+        cell!.textLabel?.text = self.dataArray[indexPath.row]
+        return cell!
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let netVC = NetViewController()
+            self.navigationController?.pushViewController(netVC, animated: true)
+        }else if indexPath.row == 1 {
+            let racVC = RACViewController()
+            self.navigationController?.pushViewController(racVC, animated: true)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -40,13 +64,15 @@ class ViewController: UIViewController {
         let col = UIColor.orange
         self.view.backgroundColor = col
         self.navigationItem.title = "基础部分"
-        baseFoundation()
+        //baseFoundation()
         
-        controlFlow()
+        //controlFlow()
         
-        methodClosure()
+        //methodClosure()
         
-        classAndObject()
+        //classAndObject()
+        
+        configTableView()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .action, target: self, action:#selector(barButtonAction(button:)))
     }
@@ -55,6 +81,13 @@ class ViewController: UIViewController {
         //debugPrint(button)
         let vc = ProtocolViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func configTableView() {
+        let tableView = UITableView.init(frame: self.view.bounds, style: .grouped)
+        self.view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     /// 基础部分
