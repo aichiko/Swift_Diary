@@ -39,6 +39,7 @@ class LabelBinding {
 class RACViewController: UIViewController {
     @available(iOS 2.0, *)
     
+    lazy var viewModel = RACViewModel.init(title: "ash")
     lazy var person = Person.init(name: "ash")
     lazy var dispose: Disposable? = nil
     override func viewDidLoad() {
@@ -138,7 +139,7 @@ class RACViewController: UIViewController {
         //textField.reactive.values(forKeyPath: "text").start()
         
         let button = UIButton.init(type: .system)
-        button.setTitle("Button", for: .normal)
+        button.setTitle("Push", for: .normal)
         self.view.addSubview(button)
         
         button.snp.makeConstraints { (make) in
@@ -146,6 +147,15 @@ class RACViewController: UIViewController {
             make.top.equalTo(label.snp.bottom).offset(20)
         }
         // Notify after every time `viewWillAppear(_:)` is called.
+        
+        let signalProducer = SignalProducer<Bool, NoError>.init(value: true)
+        
+        let action: Action<((UIButton) ->Void), Bool, NoError> = Action.init { (button) in
+            debugPrint(button)
+            return signalProducer
+        }
+        
+        button.addTarget(self, action: #selector(buttonAction(button:)), for: .touchUpInside)
     }
     
     func makeSearchRequest(escapedQuery: String?) -> URLRequest {
@@ -153,7 +163,9 @@ class RACViewController: UIViewController {
     }
     
     func buttonAction(button: UIButton) {
-        debugPrint("")
+        debugPrint("button Action")
+        let exampleVC = ExampleTableViewController()
+        self.navigationController?.pushViewController(exampleVC, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
