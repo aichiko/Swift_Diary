@@ -231,7 +231,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          *  元组匹配、值绑定、where条件匹配
          *  注意下面的匹配没有default，因为它包含了所有情况
          */
-        let d=(x:900,y:90)
+        let d=(x:90,y:90)
         switch d{
         case (0,0):
             debugPrint("d in (0,0)")

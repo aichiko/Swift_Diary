@@ -136,7 +136,6 @@ class RACViewController: UIViewController {
                 break
             }
         }
-        //textField.reactive.values(forKeyPath: "text").start()
         
         let button = UIButton.init(type: .system)
         button.setTitle("Push", for: .normal)
@@ -148,12 +147,12 @@ class RACViewController: UIViewController {
         }
         // Notify after every time `viewWillAppear(_:)` is called.
         
-        let signalProducer = SignalProducer<Bool, NoError>.init(value: true)
-        
-        let action: Action<((UIButton) ->Void), Bool, NoError> = Action.init { (button) in
-            debugPrint(button)
-            return signalProducer
-        }
+//        let signalProducer = SignalProducer<Bool, NoError>.init(value: true)
+//        
+//        let action: Action<((UIButton) ->Void), Bool, NoError> = Action.init { (button) in
+//            debugPrint(button)
+//            return signalProducer
+//        }
         
         button.addTarget(self, action: #selector(buttonAction(button:)), for: .touchUpInside)
     }
