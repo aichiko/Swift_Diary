@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -75,6 +76,14 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
                 debugPrint("Data: \(utf8Text)")
             }
+            if response.result.isSuccess {
+                let value = JSON(response.result.value as Any)
+                debugPrint("value ==== \(value)")
+                if let title = value["data"][0]["bn_title"].string {
+                    //可以直接解析到title中，不用考虑数组过界和类型不符合的问题
+                    debugPrint("title === \(title)")
+                }
+            }
         }
     }
     
@@ -127,35 +136,55 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         debugPrint(info)
         let image = info[UIImagePickerControllerEditedImage] as? UIImage
-        do {
-            if try self.httpLoadImage(image) {
-                self.dismiss(animated: true , completion: nil)
-            }
-        } catch {
-            debugPrint(error)
-        }
+        try! self.httpLoadImage(image)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
-    private func httpLoadImage(_ image: UIImage?) throws ->Bool {
-        let uploadRequest = Alamofire.upload(UIImagePNGRepresentation(image!)!, to: "http://meetliveapi.24hmb.com/api/ImageUpload").uploadProgress { (progress) in
-            debugPrint("progress === \(progress)")
-        }.responseJSON { (response) in
-            debugPrint("response === \(response)")
-            if response.result.isSuccess {
-                debugPrint(response.request!)  // original URL request
-                debugPrint(response.response!) // HTTP URL response
-                debugPrint(response.data!)     // server data
-                debugPrint(response.result)   // result of response serialization
-            } else {
-                //throw PrinterError.NoToner
-            }
+    private func httpLoadImage(_ image: UIImage?) throws {
+        if image == nil {
+            throw PrinterError.NoToner
         }
-        try uploadRequest.task
-        return true
+        //用于上传data数据
+//        Alamofire.upload(UIImagePNGRepresentation(image!)!, to: "http://meetliveapi.24hmb.com/api/ImageUpload").uploadProgress { (progress) in
+//            debugPrint("progress === \(progress)")
+//            }.responseJSON { (response) in
+//                debugPrint("response === \(response)")
+//                if response.result.isSuccess {
+//                    debugPrint(response.request!)  // original URL request
+//                    debugPrint(response.response!) // HTTP URL response
+//                    debugPrint(response.data!)     // server data
+//                    debugPrint(response.result)   // result of response serialization
+//                    self.dismiss(animated: true , completion: nil)
+//                } else {
+//                    //throw PrinterError.NoToner
+//                }
+//        }
+        
+        //上传图片以及 多文件上传
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            multipartFormData.append(UIImagePNGRepresentation(image!)!, withName: "imageFile", fileName: "222.png", mimeType: "png/jgp")
+        }, to: URL.init(string: "http://meetliveapi.24hmb.com/api/ImageUpload")!, encodingCompletion: {
+            (result) in
+            debugPrint("result === \(result)");
+            switch result {
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    if let value = response.result.value as? [String: AnyObject]{
+                        let json = JSON(value)
+                        //上传成功 并解析upload ：UploadRequest的数据。以及image的地址
+                        debugPrint(json["data"].string!)
+                    }
+                }
+            case .failure(let encodingError):
+                debugPrint(encodingError)
+                break
+                
+            }
+            self.dismiss(animated: true, completion: nil)
+        })
     }
     
     override func didReceiveMemoryWarning() {
