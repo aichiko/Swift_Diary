@@ -17,6 +17,7 @@
 		D581E3421DE735E900D3BA6C /* ProtocolExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E33F1DE735E900D3BA6C /* ProtocolExample.swift */; };
 		D581E3431DE735E900D3BA6C /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3401DE735E900D3BA6C /* ProtocolViewController.swift */; };
 		D581E3451DE736C200D3BA6C /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3441DE736C200D3BA6C /* TableViewModel.swift */; };
+		D5B6B4FC1DF95DF900362403 /* DocumentWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B6B4FB1DF95DF900362403 /* DocumentWebViewController.swift */; };
 		D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */; };
 		D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3A611DC86BC700A81173 /* ViewController.swift */; };
 		D5FB3A651DC86BC700A81173 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB3A631DC86BC700A81173 /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 		D581E33F1DE735E900D3BA6C /* ProtocolExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolExample.swift; sourceTree = "<group>"; };
 		D581E3401DE735E900D3BA6C /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
 		D581E3441DE736C200D3BA6C /* TableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		D5B6B4FB1DF95DF900362403 /* DocumentWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentWebViewController.swift; sourceTree = "<group>"; };
 		D5FB3A5C1DC86BC700A81173 /* Swift_Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swift_Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FB3A5F1DC86BC700A81173 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5FB3A611DC86BC700A81173 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				D581E3361DE7359400D3BA6C /* NetViewController.swift */,
+				D5B6B4FB1DF95DF900362403 /* DocumentWebViewController.swift */,
 				D581E3371DE7359400D3BA6C /* RACViewController.swift */,
 				D581E33A1DE735CD00D3BA6C /* ExampleTableViewController.swift */,
 			);
@@ -394,6 +397,7 @@
 				D581E3391DE7359400D3BA6C /* RACViewController.swift in Sources */,
 				D581E3411DE735E900D3BA6C /* BaseClass.swift in Sources */,
 				D581E3381DE7359400D3BA6C /* NetViewController.swift in Sources */,
+				D5B6B4FC1DF95DF900362403 /* DocumentWebViewController.swift in Sources */,
 				D581E3421DE735E900D3BA6C /* ProtocolExample.swift in Sources */,
 				D581E33D1DE735DA00D3BA6C /* RACViewModel.swift in Sources */,
 			);

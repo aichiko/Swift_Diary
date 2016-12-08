@@ -9,6 +9,28 @@
 import Foundation
 import ReactiveCocoa
 import ReactiveSwift
+import Alamofire
+import SwiftyJSON
+
+
+
+struct MeetBanner {
+    
+    var bn_color: String?
+    var bn_http: String?
+    var bn_mobilepath: String?
+    var bn_title: String?
+    
+    init(response: DataResponse<Any>?) {
+        let value = JSON(response?.result.value as Any)
+        bn_title = value["data"][0]["bn_title"].string
+        bn_color = value["data"][0]["bn_color"].string
+        bn_mobilepath = value["data"][0]["bn_mobilepath"].string
+        bn_http = value["data"][0]["bn_http"].string
+    }
+}
+
+
 
 class BaseClass {
     

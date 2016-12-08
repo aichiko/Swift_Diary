@@ -26,6 +26,8 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let uploadButton = UIButton(type: .system)
         
+        let downloadButton = UIButton(type: .system)
+        
         
         getButton.setTitle("HTTP GET", for: .normal)
         getButton.tag = 101
@@ -33,10 +35,13 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         postButton.tag = 102
         uploadButton.setTitle("HTTP Upload", for: .normal)
         uploadButton.tag = 103
+        downloadButton.setTitle("HTTP Download", for: .normal)
+        downloadButton.tag = 104
         
         self.view.addSubview(getButton)
         self.view.addSubview(postButton)
         self.view.addSubview(uploadButton)
+        self.view.addSubview(downloadButton)
         
         getButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(self.view)
@@ -53,9 +58,15 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             make.top.equalTo(postButton.snp.bottom).offset(50)
         }
         
+        downloadButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(uploadButton.snp.bottom).offset(50)
+        }
+        
         getButton.addTarget(self, action: #selector(httpGetOrPostRequest(button:)), for: .touchUpInside)
         postButton.addTarget(self, action: #selector(httpGetOrPostRequest(button:)), for: .touchUpInside)
         uploadButton.addTarget(self, action: #selector(httpGetOrPostRequest(button:)), for: .touchUpInside)
+        downloadButton.addTarget(self, action: #selector(httpGetOrPostRequest(button:)), for: .touchUpInside)
     }
 
     /// get 请求
@@ -69,6 +80,12 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             debugPrint(response.result)   // result of response serialization
             
             //debugPrint("All Response Info: \(response)")
+            
+            //用model来解析请求获得的数据
+            let banner = MeetBanner(response: response)
+            debugPrint(banner)
+            debugPrint("banner.title === \(banner.bn_title! as String)")
+            
             
             if let JSON = response.result.value {
                 debugPrint("JSON: \(JSON)")
@@ -119,6 +136,10 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         case 103:
             debugPrint("http upload request")
             self.uploadImage()
+            break
+        case 104:
+            debugPrint("http download request")
+            self.fileDownload()
             break
         default:
             break
@@ -185,6 +206,28 @@ class NetViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             }
             self.dismiss(animated: true, completion: nil)
         })
+    }
+    
+    /// 文件下载
+    private func fileDownload() {
+        
+        let destination: DownloadRequest.DownloadFileDestination = {_,_ in
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileURL = documentsURL.appendingPathComponent("pig.pdf")
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        //destination 可为空
+        Alamofire.download("http://meetliveapi.24hmb.com:80/Uploads/Attachment/20161208154211831.pdf", to: destination).response { (response) in
+            //打印文件的最终地址
+            if let destinationURL = response.destinationURL {
+                debugPrint(destinationURL)
+                let documentVC = DocumentWebViewController()
+                documentVC.requestURL = destinationURL
+                self.navigationController?.pushViewController(documentVC, animated: true)
+            }
+        }.downloadProgress { (progress) in
+            debugPrint("progress === \(progress)")
+        }
     }
     
     override func didReceiveMemoryWarning() {
