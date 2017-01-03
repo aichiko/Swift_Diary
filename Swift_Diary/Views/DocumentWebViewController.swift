@@ -36,7 +36,6 @@ class DocumentWebViewController: UIViewController, UIDocumentInteractionControll
         let documentController = UIDocumentInteractionController.init(url: self.requestURL!)
         //documentController.delegate = self
         documentController.presentOptionsMenu(from: self.navigationItem.rightBarButtonItem!, animated: true)
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

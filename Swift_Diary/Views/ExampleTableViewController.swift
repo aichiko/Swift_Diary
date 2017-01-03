@@ -8,8 +8,29 @@
 
 import UIKit
 
+enum HTTPMethod: String {
+    case GET = "GET"
+    case POST = "POST"
+}
+
+protocol CCRequest {
+    var host: String { get }
+    var path: String { get }
+    
+    var method: HTTPMethod { get }
+    var parameter: [String: Any] { get }
+    associatedtype Response
+    
+    /// 返回一个model数组，适用于列表显示
+    func parse(data: Data) -> [Response?]?
+    /// 返回一个model
+    func parse(data: Data) -> Response?
+}
+
 class ExampleTableViewController: UITableViewController {
 
+    lazy var dataArray = Array<StudyPlanModel?>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,8 +39,44 @@ class ExampleTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        let request = StudyPlanModelRequest(parameter: ["userName": "yubin"])
+        request.send { (models, error) in
+            DispatchQueue.main.async {
+                self.dataArray = models
+                self.tableView?.reloadData()
+            }
+        }
+        
+        if #available(iOS 10.0, *) {
+            // 创建UIRefreshControl
+            let refreshControl = UIRefreshControl()
+            tableView?.refreshControl = refreshControl
+            tableView?.refreshControl?.attributedTitle = NSAttributedString.init(string: "下拉刷新")
+            tableView?.refreshControl?.addTarget(self, action: #selector(refreshControlAction(_:)), for: .valueChanged)
+        } else {
+            // Fallback on earlier versions
+        }
     }
 
+    @objc private func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        NSLog("下拉刷新！！！")
+        self.dataArray.removeAll()
+        let request = StudyPlanModelRequest(parameter: ["userName": "yubin"])
+        request.send { (models, error) in
+            DispatchQueue.main.async {
+                self.dataArray = models
+                self.tableView?.reloadData()
+                guard #available(iOS 10.0, *) else{
+                    return
+                }
+                if (self.tableView?.refreshControl?.isRefreshing)! {
+                    self.tableView?.refreshControl?.endRefreshing()
+                }
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,17 +91,19 @@ class ExampleTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return self.dataArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier")
         if cell == nil {
-            cell = UITableViewCell.init(style: .default, reuseIdentifier: "reuseIdentifier")
+            cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: "reuseIdentifier")
         }
         // Configure the cell...
-
+        let model = self.dataArray[indexPath.row]
+        cell?.textLabel?.text = model?.planName
+        cell?.detailTextLabel?.text = "开放时间:\((model?.startTime)!)-\((model?.endTime)!)"
         return cell!
     }
     

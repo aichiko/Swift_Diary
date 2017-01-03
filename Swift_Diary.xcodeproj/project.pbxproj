@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2FF3B9B22273BD7A8103E874 /* Pods_Swift_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A451F5AAEC6229656250E84 /* Pods_Swift_Diary.framework */; };
+		D52107C21E1B6F5E00A42B32 /* StudyPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52107C11E1B6F5D00A42B32 /* StudyPlanModel.swift */; };
 		D5298C871DEC7C4500D191D4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5298C861DEC7C4500D191D4 /* AssetsLibrary.framework */; };
 		D581E3381DE7359400D3BA6C /* NetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3361DE7359400D3BA6C /* NetViewController.swift */; };
 		D581E3391DE7359400D3BA6C /* RACViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3371DE7359400D3BA6C /* RACViewController.swift */; };
@@ -48,6 +49,7 @@
 		104608C6F6BD21B210114E12 /* Pods-Swift_Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.debug.xcconfig"; sourceTree = "<group>"; };
 		1E0CBE4866F7180B6D3585C0 /* Pods-Swift_Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift_Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swift_Diary/Pods-Swift_Diary.release.xcconfig"; sourceTree = "<group>"; };
 		4A451F5AAEC6229656250E84 /* Pods_Swift_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D52107C11E1B6F5D00A42B32 /* StudyPlanModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPlanModel.swift; sourceTree = "<group>"; };
 		D5298C861DEC7C4500D191D4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D581E3361DE7359400D3BA6C /* NetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetViewController.swift; sourceTree = "<group>"; };
 		D581E3371DE7359400D3BA6C /* RACViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RACViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				D581E33E1DE735E900D3BA6C /* BaseClass.swift */,
 				D581E33F1DE735E900D3BA6C /* ProtocolExample.swift */,
 				D581E3401DE735E900D3BA6C /* ProtocolViewController.swift */,
+				D52107C11E1B6F5D00A42B32 /* StudyPlanModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D52107C21E1B6F5E00A42B32 /* StudyPlanModel.swift in Sources */,
 				D5FB3A621DC86BC700A81173 /* ViewController.swift in Sources */,
 				D581E3451DE736C200D3BA6C /* TableViewModel.swift in Sources */,
 				D581E3431DE735E900D3BA6C /* ProtocolViewController.swift in Sources */,

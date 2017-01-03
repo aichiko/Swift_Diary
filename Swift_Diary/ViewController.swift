@@ -54,6 +54,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }else if indexPath.row == 1 {
             let racVC = RACViewController()
             self.navigationController?.pushViewController(racVC, animated: true)
+        }else {
+            let tableViewVC = ExampleTableViewController()
+            self.navigationController?.pushViewController(tableViewVC, animated: true)
         }
     }
     override func viewDidLoad() {
