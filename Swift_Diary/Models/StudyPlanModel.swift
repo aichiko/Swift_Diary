@@ -8,11 +8,51 @@
 
 import Foundation
 import SwiftyJSON
+import Alamofire
+
+struct URLSessionClient: Client {
+    let host = "http://117.144.157.4:8080/24/web/study/"
+    
+    internal func send<T : CCRequest>(_ r: T, handler: @escaping ([T.Response?], Error?) -> Void) {
+        let url = URL(string: host.appending(r.path))!
+        var request = URLRequest(url: url)
+        request.httpMethod = r.method.rawValue
+        let bodyStr: String = getHttpBodyString(r.parameter)
+        request.httpBody = bodyStr.data(using: .utf8)
+        request.timeoutInterval = 10.0
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if let data = data, let res: [T.Response?] = r.parse(data: data) {
+                DispatchQueue.main.async { handler(res, error) }
+            } else {
+                NSLog("error === \(error)")
+                DispatchQueue.main.async { handler([], error) }
+            }
+        }
+        task.resume()
+    }
+    
+    internal func alamofireSend<T : CCRequest>(_ r: T, handler: @escaping ([T.Response?], Error?) -> Void) {
+        let url = URL(string: host.appending(r.path))!
+        Alamofire.request(url, method: .post, parameters: r.parameter).responseJSON { (response) in
+            debugPrint("data === \(response.data)")
+            if response.result.isSuccess {
+                let value = JSON(response.result.value!)
+                debugPrint("value ==== \(value)")
+                if let res = r.JSONParse(jsonData: value["data"]) {
+                    DispatchQueue.main.async { handler(res, response.result.error) }
+                }
+            }else {
+                NSLog("error === \(response.result.error)")
+                DispatchQueue.main.async { handler([], response.result.error) }
+            }
+        }
+    }
+}
 
 struct StudyPlanModelRequest: CCRequest {
     
     // 配置请求的基本参数
-    let host = "http://117.144.157.4:8080/24/web/study/"
     let path: String = "queryStudyList"
     let method: HTTPMethod = .POST
     let parameter: [String: Any]
@@ -22,7 +62,8 @@ struct StudyPlanModelRequest: CCRequest {
     /// 返回一个model数组，适用于列表显示
     internal func parse(data: Data) -> [Response?]? {
         var dataArray: [StudyPlanModel?] = []
-        if let arr = try? JSONSerialization.jsonObject(with: data, options: []) as! Array<Any> {
+        if let dic1 = try? JSONSerialization.jsonObject(with: data, options: []) as! [String: Any] {
+            let arr = dic1["data"] as! Array<Any>
             NSLog("arr === \(arr)")
             for dic in arr {
                 let model = StudyPlanModel.init(data: try! JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted))
@@ -37,26 +78,16 @@ struct StudyPlanModelRequest: CCRequest {
     internal func parse(data: Data) -> Response? {
         return nil
     }
-}
-
-extension StudyPlanModelRequest {
-    func send(handler: @escaping([Response?], Error?) -> Void) {
-        let url = URL(string: host.appending(path))!
-        var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-        let bodyStr: String = getHttpBodyString(parameter)
-        request.httpBody = bodyStr.data(using: .utf8)
-        request.timeoutInterval = 10.0
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            if let data = data, let res: [Response?] = self.parse(data: data) {
-                DispatchQueue.main.async { handler(res, error) }
-            } else {
-                NSLog("error === \(error)")
-                DispatchQueue.main.async { handler([], error) }
-            }
+    
+    /// 使用SwiftyJSON 进行解析 返回一个model数组，适用于列表显示
+    internal func JSONParse(jsonData: JSON) -> [Response?]? {
+        var dataArr: [StudyPlanModel?] = []
+        let arr = jsonData.array
+        for dic in arr! {
+            let model = StudyPlanModel.init(dictionary: dic)
+            dataArr.append(model)
         }
-        task.resume()
+        return dataArr
     }
 }
 
@@ -71,18 +102,19 @@ private func getHttpBodyString(_ parameters: [String: Any]) ->String {
     return paramStr
 }
 
+struct StudyPlanModel: Decodable {
+    /// 返回一个model
+    internal func parse(data: Data) -> StudyPlanModel? {
+        return StudyPlanModel(data: data)
+    }
 
-struct StudyPlanModel {
     var planName: String
     var finishCount: Int
     var allCount: Int
     var startTime: String
     var endTime: String
     var studyPlanId: Int
-    
-//    init(json: JSON) {
-//        
-//    }
+
     ///传入data 得到一个StudyPlanModel，前提是value不为空，否则会返回nil
     init?(data: Data) {
         
@@ -113,5 +145,14 @@ struct StudyPlanModel {
         self.startTime = startTime.replacingOccurrences(of: "-", with: ".")
         self.endTime = endTime.replacingOccurrences(of: "-", with: ".")
         self.studyPlanId = studyPlanId
+    }
+    
+    init(dictionary: JSON?) {
+        self.planName = (dictionary?["planName"].string)!
+        self.finishCount = (dictionary?["finishCount"].int)!
+        self.allCount = (dictionary?["allCount"].int)!
+        self.startTime = (dictionary?["startTime"].string)!.replacingOccurrences(of: "-", with: ".")
+        self.endTime = (dictionary?["endTime"].string)!.replacingOccurrences(of: "-", with: ".")
+        self.studyPlanId = (dictionary?["studyPlanId"].int)!
     }
 }

@@ -7,6 +7,18 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+protocol Decodable {
+    /// 返回一个model
+    func parse(data: Data) -> Self?
+}
+
+protocol Client {
+    var host: String { get }
+    func send<T: CCRequest>(_ r: T, handler: @escaping([T.Response?], Error?) -> Void)
+    func alamofireSend<T: CCRequest>(_ r: T, handler: @escaping([T.Response?], Error?) -> Void)
+}
 
 enum HTTPMethod: String {
     case GET = "GET"
@@ -14,17 +26,17 @@ enum HTTPMethod: String {
 }
 
 protocol CCRequest {
-    var host: String { get }
     var path: String { get }
     
     var method: HTTPMethod { get }
     var parameter: [String: Any] { get }
-    associatedtype Response
+    associatedtype Response: Decodable
     
     /// 返回一个model数组，适用于列表显示
     func parse(data: Data) -> [Response?]?
-    /// 返回一个model
-    func parse(data: Data) -> Response?
+    
+    /// 使用SwiftyJSON 进行解析 返回一个model数组，适用于列表显示
+    func JSONParse(jsonData: JSON) -> [Response?]?
 }
 
 class ExampleTableViewController: UITableViewController {
@@ -40,8 +52,18 @@ class ExampleTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        
+        //使用原生的请求
         let request = StudyPlanModelRequest(parameter: ["userName": "yubin"])
-        request.send { (models, error) in
+//        URLSessionClient().send(request) { (models, error) in
+//            DispatchQueue.main.async {
+//                self.dataArray = models
+//                self.tableView?.reloadData()
+//            }
+//        }
+        
+        //使用Alamofire的请求
+        URLSessionClient().alamofireSend(request) { (models, error) in
             DispatchQueue.main.async {
                 self.dataArray = models
                 self.tableView?.reloadData()
@@ -63,7 +85,7 @@ class ExampleTableViewController: UITableViewController {
         NSLog("下拉刷新！！！")
         self.dataArray.removeAll()
         let request = StudyPlanModelRequest(parameter: ["userName": "yubin"])
-        request.send { (models, error) in
+        URLSessionClient().send(request) { (models, error) in
             DispatchQueue.main.async {
                 self.dataArray = models
                 self.tableView?.reloadData()
