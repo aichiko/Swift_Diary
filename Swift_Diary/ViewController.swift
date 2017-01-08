@@ -32,7 +32,7 @@ private enum Rank: Int {
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    lazy var dataArray = ["swift_Networking", "swift_RAC", "面向协议编程"]
+    lazy var dataArray = ["swift_Networking", "swift_RAC", "面向协议编程", "展示互动"]
     @available(iOS 2.0, *)
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataArray.count
@@ -54,9 +54,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }else if indexPath.row == 1 {
             let racVC = RACViewController()
             self.navigationController?.pushViewController(racVC, animated: true)
-        }else {
+        }else if indexPath.row == 2 {
             let tableViewVC = ExampleTableViewController()
             self.navigationController?.pushViewController(tableViewVC, animated: true)
+        }else if indexPath.row == 3 {
+            let GenseeVC = GenseePlayViewController()
+            self.navigationController?.pushViewController(GenseeVC, animated: true)
         }
     }
     override func viewDidLoad() {

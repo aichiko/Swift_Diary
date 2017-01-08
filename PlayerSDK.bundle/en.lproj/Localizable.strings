@@ -1,0 +1,40 @@
+/*
+ Localizable.strings
+ PlayerSDK
+ 
+ Created by gzq on 7/9/15.
+ Copyright (c) 2015 Geensee. All rights reserved.
+ */
+
+//public
+"知道了" = "done";
+
+//GSPChatView
+"只看我的聊天" = "just my chat";
+"系统消息" = "System message";
+"我" = "I";
+"您已经被禁止聊天！" = "forbid to chat";
+"消息发送失败，请重试" = "failed, please try again";
+
+//GSPQaView
+"只看我的问答" = "just my Qa";
+"您已经被禁止提问" = "forbid to Qa";
+"问题发送失败，请重试！" = "failed, please try again";
+
+//GSPInvestigationView
+"已提交" = "Submitted";
+"提交" = "Submit";
+"多选" = "MultiSelect";
+"单选" = "single selection";
+"还有问题没有作答，无法提交！" = "not finished,can't sumbit";
+"提交失败，请重试！" = "sumbit failed, please try again";
+
+//GSPChatInputToolView
+"您输了太多表情，请保持在20个以内!" = "too much emotion, please keep them less than 20";
+"您输入了太多内容，请保持在512个字符以内!" = "too much content, please keep them less than 512 character";
+"发送内容不能为空！" = "can't send null";
+
+//VoteThemeView
+"当前共有问卷调查" = "questionnaire";
+"份" = "";
+"当前为强制投票，需要提交才能切换！" = "you should sumbit before switch";
