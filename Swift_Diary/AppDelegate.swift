@@ -18,7 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let vc = ViewController()
         window?.rootViewController = UINavigationController(rootViewController: vc)
+        //UIApplication.shared.setStatusBarHidden(true, with: .none)
+        //UIApplication.shared.setStatusBarHidden(false, with: .none)
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .allButUpsideDown
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
