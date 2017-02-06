@@ -12,6 +12,20 @@ import Foundation
 
 extension GSPDocView {
     func interfaceOrientation(orientation: UIInterfaceOrientation) {
+        //将视图放到父视图的最上面
+        if orientation == .landscapeLeft {
+            self.superview?.insertSubview(self, at: (self.superview?.subviews.count)!-1)
+        }
+        UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
+    }
+}
+
+extension GSPVideoView {
+    func interfaceOrientation(orientation: UIInterfaceOrientation) {
+        //将视图放到父视图的最上面
+        if orientation == .landscapeLeft {
+            self.superview?.insertSubview(self, at: (self.superview?.subviews.count)!-1)
+        }
         UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
     }
 }
@@ -50,6 +64,11 @@ extension UIColor {
     }
 }
 
+enum FullScreenType {
+    case docFullScreen;
+    case videoFullScreen
+}
+
 class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
     
     private let textLabel = UILabel.init()
@@ -64,11 +83,15 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
     
     private let controlView = DocControlView()
     
+    private let videoControlView = VideoControlView()
+    
     private let audioView = UIImageView.init(image: UIImage.init(named: "Group 2"))
     
     private var isplayVideo = true//默认为true
     
     private var isFullScreen = false//是否为全屏 默认为false
+    
+    var type: FullScreenType = .videoFullScreen//默认使用直播全屏
     
     private var videoHeight: CGFloat?
     
@@ -129,7 +152,21 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
     
     ///
     private func configSubviews() {
-        self.view.addSubview(audioView)
+        videoView.addSubview(audioView)
+        //加上控制层
+        videoControlView.frame = videoView.bounds
+        videoView.addSubview(videoControlView)
+        videoControlView.backButton.isHidden = !isFullScreen
+        videoControlView.fullScreen = {
+            videoControlView in
+            self.type = .videoFullScreen
+            if videoControlView.fullButton.isSelected {
+                self.videoView.interfaceOrientation(orientation: .portrait)
+            }else {
+                self.videoView.interfaceOrientation(orientation: .landscapeLeft)
+            }
+        }
+        
         audioView.alpha = 0
         audioView.snp.makeConstraints { (make) in
             make.center.equalTo(self.videoView)
@@ -163,11 +200,15 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
         controlView.play = {
             controlView in
             NSLog("点击播放或者暂停")
+            let playstatus = controlView.playButton.isSelected
+            self.playerManager.enableAudio(playstatus)
+            self.playerManager.enableVideo(playstatus)
         }
     }
     
     @objc private func fullscreenAction(button: UIButton) {
         NSLog("点击文档全屏")
+        self.type = .docFullScreen
         docView.interfaceOrientation(orientation: .landscapeLeft)
     }
     
@@ -176,14 +217,16 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
         isplayVideo = !isplayVideo
         playerManager.enableVideo(isplayVideo)
         barItem.isSelected = !barItem.isSelected
-        UIView.animate(withDuration: 0.2) { 
+        //需要加上左右翻转动画
+        UIView.transition(with: videoView, duration: 0.5, options: .transitionFlipFromLeft, animations: {
             //
+        }, completion: { [unowned self] (bool) in
             if self.isplayVideo {
                 self.audioView.alpha = 0
             }else {
                 self.audioView.alpha = 1.0
             }
-        }
+        })
     }
     
     /// 返回并推出直播
@@ -223,8 +266,6 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
         docView.zoomEnabled = true//允许拖拽手势
     }
     
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -233,6 +274,10 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
     //MARK: - GSPPlayerManagerDelegate
     public func playerManager(_ playerManager: GSPPlayerManager!, didReceiveSelfJoinResult joinResult: GSPJoinResult, currentIDC idcKey: String!) {
         debugPrint("joinResult === \(joinResult.rawValue)")
+        if joinResult == .OK {
+            controlView.playButton.isSelected = true
+            videoControlView.playButton.isSelected = true
+        }
     }
 
     /*
@@ -248,23 +293,41 @@ class GenseePlayViewController: UIViewController, GSPPlayerManagerDelegate {
     //iOS 8.0之后使用
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         NSLog("size === \(size) coordinator === \(coordinator)")
-        if size.width>size.height {
-            isFullScreen = true
-            docView.frame.origin = CGPoint(x: 0, y: 0)
-            docView.frame.size = size
-            controlView.frame.size = size
-            self.navigationController?.navigationBar.isHidden = true
-            controlView.isHidden = false
-//            self.navigationController?.navigationBar.subviews.first?.alpha = 0
-        }else {
-            isFullScreen = false
-            controlView.isHidden = true
-            let pointY = size.width*9/16 + 64 + 42
-            docView.frame.origin = CGPoint(x: 0, y: pointY)//需要重新计算
-            docView.frame.size = CGSize(width: size.width, height: 218)
-            controlView.frame.size = CGSize(width: size.width, height: 218)
-            self.navigationController?.navigationBar.isHidden = false
-//            self.navigationController?.navigationBar.subviews.first?.alpha = 1.0
+        //首先分为直播全屏和文档全屏
+        if type == .videoFullScreen {
+            //直播全屏
+            if size.width>size.height {
+                isFullScreen = true
+                videoView.frame.origin = CGPoint(x: 0, y: 0)
+                videoView.frame.size = size
+                videoControlView.frame.size = size
+                self.navigationController?.navigationBar.isHidden = true
+            }else {
+                isFullScreen = false
+                videoView.frame = CGRect(x: 0, y: 64, width: self.view.bounds.size.height, height: self.view.bounds.size.height*9/16)
+                videoControlView.frame = videoView.bounds
+                self.navigationController?.navigationBar.isHidden = false
+            }
+            videoControlView.backButton.isHidden = !isFullScreen
+        }else if type == .docFullScreen {
+            if size.width>size.height {
+                isFullScreen = true
+                docView.frame.origin = CGPoint(x: 0, y: 0)
+                docView.frame.size = size
+                controlView.frame.size = size
+                self.navigationController?.navigationBar.isHidden = true
+                controlView.isHidden = false
+                //            self.navigationController?.navigationBar.subviews.first?.alpha = 0
+            }else {
+                isFullScreen = false
+                controlView.isHidden = true
+                let pointY = size.width*9/16 + 64 + 42
+                docView.frame.origin = CGPoint(x: 0, y: pointY)//需要重新计算
+                docView.frame.size = CGSize(width: size.width, height: 218)
+                controlView.frame.size = CGSize(width: size.width, height: 218)
+                self.navigationController?.navigationBar.isHidden = false
+                //            self.navigationController?.navigationBar.subviews.first?.alpha = 1.0
+            }
         }
     }
     //iOS 8.0之前使用

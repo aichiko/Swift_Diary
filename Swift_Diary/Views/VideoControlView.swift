@@ -1,18 +1,17 @@
 //
-//  DocControlView.swift
+//  VideoControlView.swift
 //  Swift_Diary
 //
-//  Created by 24hmb on 2017/1/10.
+//  Created by 24hmb on 2017/2/6.
 //  Copyright © 2017年 24hmb. All rights reserved.
 //
 
 import UIKit
 
-typealias Back = (_ controlView: DocControlView) ->Void
-typealias Play = (_ controlView: DocControlView) ->Void
+typealias FullScreen = (_ controlView: VideoControlView) ->Void
 
-/// 文档视图的控制层
-class DocControlView: UIView {
+/// 直播视图的控制层
+class VideoControlView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -21,10 +20,9 @@ class DocControlView: UIView {
         // Drawing code
     }
     */
-    
-    var back: Back?
-    var play: Play?
 
+    var fullScreen: FullScreen?
+    
     let backButton = UIButton.init(type: .custom)
     
     //let titleLabel = UILabel()
@@ -33,15 +31,16 @@ class DocControlView: UIView {
     
     let fullButton = UIButton.init(type: .custom)
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configSubviews()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func configSubviews() {
-        self.backgroundColor = UIColor.orange.withAlphaComponent(0.5)
-        
         self.addSubview(backButton)
         self.addSubview(playButton)
         self.addSubview(fullButton)
@@ -49,7 +48,8 @@ class DocControlView: UIView {
         backButton.setImage(UIImage.init(named: "back"), for: .normal)
         playButton.setImage(UIImage.init(named: "video"), for: .normal)
         playButton.setImage(UIImage.init(named: "videoplay"), for: .selected)
-        fullButton.setImage(UIImage.init(named: "minimizing"), for: .normal)
+        fullButton.setImage(UIImage.init(named: "maximization"), for: .normal)
+        fullButton.setImage(UIImage.init(named: "minimizing"), for: .selected)
         
         backButton.setTitle("会议标题", for: .normal)
         backButton.setTitleColor(UIColor.white, for: .normal)
@@ -77,22 +77,26 @@ class DocControlView: UIView {
         }
         
         backButton.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
-        fullButton.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
+        fullButton.addTarget(self, action: #selector(fullscreenAction(_:)), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playAction(_:)), for: .touchUpInside)
     }
     
+    @objc private func fullscreenAction(_ button: UIButton) {
+        NSLog("点击直播全屏")
+        if let fullScreen = fullScreen {
+            fullScreen(self)
+        }
+        button.isSelected = !button.isSelected
+    }
+    
     @objc private func backAction(_ button: UIButton) {
-        back!(self)
+        if let fullScreen = fullScreen {
+            fullScreen(self)
+        }
     }
     
     @objc private func playAction(_ button: UIButton) {
         button.isSelected = !button.isSelected
-        if let play = play {
-            play(self)
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
     }
 }
