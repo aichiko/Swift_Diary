@@ -20,6 +20,7 @@
 		D51F84D11E1F3D85000A8702 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D51F84D01E1F3D85000A8702 /* libsqlite3.tbd */; };
 		D52107C21E1B6F5E00A42B32 /* StudyPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52107C11E1B6F5D00A42B32 /* StudyPlanModel.swift */; };
 		D5298C871DEC7C4500D191D4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5298C861DEC7C4500D191D4 /* AssetsLibrary.framework */; };
+		D538AFF91E4C4C9D007BD5BE /* GIFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D538AFF81E4C4C9D007BD5BE /* GIFViewController.swift */; };
 		D54A06E21E23ECF200834919 /* DocControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A06E11E23ECF200834919 /* DocControlView.swift */; };
 		D581E3381DE7359400D3BA6C /* NetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3361DE7359400D3BA6C /* NetViewController.swift */; };
 		D581E3391DE7359400D3BA6C /* RACViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581E3371DE7359400D3BA6C /* RACViewController.swift */; };
@@ -72,6 +73,7 @@
 		D51F84D01E1F3D85000A8702 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D52107C11E1B6F5D00A42B32 /* StudyPlanModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPlanModel.swift; sourceTree = "<group>"; };
 		D5298C861DEC7C4500D191D4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		D538AFF81E4C4C9D007BD5BE /* GIFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFViewController.swift; sourceTree = "<group>"; };
 		D54A06E11E23ECF200834919 /* DocControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocControlView.swift; sourceTree = "<group>"; };
 		D581E3361DE7359400D3BA6C /* NetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetViewController.swift; sourceTree = "<group>"; };
 		D581E3371DE7359400D3BA6C /* RACViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RACViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				D5B6B4FB1DF95DF900362403 /* DocumentWebViewController.swift */,
 				D581E3371DE7359400D3BA6C /* RACViewController.swift */,
 				D581E33A1DE735CD00D3BA6C /* ExampleTableViewController.swift */,
+				D538AFF81E4C4C9D007BD5BE /* GIFViewController.swift */,
 				D51F84C41E1F362E000A8702 /* GenseePlayViewController.swift */,
 				D54A06E11E23ECF200834919 /* DocControlView.swift */,
 				D51805001E485132007186E2 /* VideoControlView.swift */,
@@ -440,6 +443,7 @@
 				D581E3431DE735E900D3BA6C /* ProtocolViewController.swift in Sources */,
 				D5FB3A601DC86BC700A81173 /* AppDelegate.swift in Sources */,
 				D581E33B1DE735CD00D3BA6C /* ExampleTableViewController.swift in Sources */,
+				D538AFF91E4C4C9D007BD5BE /* GIFViewController.swift in Sources */,
 				D581E3391DE7359400D3BA6C /* RACViewController.swift in Sources */,
 				D54A06E21E23ECF200834919 /* DocControlView.swift in Sources */,
 				D581E3411DE735E900D3BA6C /* BaseClass.swift in Sources */,
