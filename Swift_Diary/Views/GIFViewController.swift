@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import WebKit
+import ImageIO
+import MobileCoreServices
 
 //下面例子定义了一个 Container 协议，该协议定义了一个关联类型 ItemType :
 protocol StackContainer {
@@ -63,6 +66,10 @@ extension item_Stack {
 
 class GIFViewController: UIViewController {
 
+    lazy var webview: WKWebView = WKWebView.init()
+    
+    var imageView: UIImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -101,9 +108,37 @@ class GIFViewController: UIViewController {
             print("The top item on the stack is \(topItem).")
         }
         // 打印 “The top item on the stack is tres.”
+        
+        // MARK: - webview
+        //关于gif
+        //1.使用webview来显示GIF
+        /*
+        self.view.addSubview(webview)
+        webview.frame = self.view.bounds
+        
+        let path = Bundle.main.path(forResource: "timg", ofType: "gif")
+        if let data = try? Data.init(contentsOf: URL.init(fileURLWithPath: path!)) {
+            webview.load(data, mimeType: "image/gif", characterEncodingName: "UTF-8", baseURL: Bundle.main.resourceURL!)
+        }
+        
+        //当然也可以直接加载文件路径,下面两种load方法都可以实现
+        webview.load(URLRequest.init(url: URL.init(fileURLWithPath: path!)))
+        webview.loadFileURL(URL.init(fileURLWithPath: path!), allowingReadAccessTo: Bundle.main.resourceURL!)
+        */
+        
+        let (images, duration) = showGif()!
+//        let animatedImage = UIImage.animatedImage(with: images, duration: duration)
+        imageView = UIImageView.init(image: images.first)
+        
+        self.view.addSubview(imageView!)
+        imageView?.center = self.view.center
+        
+        imageView?.animationImages = images
+        imageView?.animationDuration = duration
+        imageView?.animationRepeatCount = 3
+        imageView?.startAnimating()
     }
 
-    
     //每个参数的类型都要标明，因为它们不能被推断出来。如果您在某个参数类型前面加上了 inout ，那么这个参数 就可以在这个函数作用域当中被修改。
     //交换a b 的值
     func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
@@ -129,6 +164,47 @@ class GIFViewController: UIViewController {
         }
         return nil
     }
+    
+    // MARK: - ImageIO
+    private func showGif() ->([UIImage], TimeInterval)? {
+        let path = Bundle.main.path(forResource: "timg", ofType: "gif")
+        let data = try? Data.init(contentsOf: URL.init(fileURLWithPath: path!))
+        let source = CGImageSourceCreateWithData(data as! CFData, nil)
+        let count = CGImageSourceGetCount(source!)
+        let options: NSDictionary = [kCGImageSourceShouldCache as String: true, kCGImageSourceTypeIdentifierHint as String: kUTTypeGIF]
+        var gifDuration = 0.0
+        var images = [UIImage]()
+        
+        func frameDuration(from gifInfo: NSDictionary) -> Double {
+            let gifDefaultFrameDuration = 0.100
+            let unclampedDelayTime = gifInfo[kCGImagePropertyGIFUnclampedDelayTime as String] as? NSNumber
+            let delayTime = gifInfo[kCGImagePropertyGIFDelayTime as String] as? NSNumber
+            let duration = unclampedDelayTime ?? delayTime
+            guard let frameDuration = duration else { return gifDefaultFrameDuration }
+            
+            return frameDuration.doubleValue > 0.011 ? frameDuration.doubleValue : gifDefaultFrameDuration
+        }
+        for i in 0 ..< count {
+            guard let imageRef = CGImageSourceCreateImageAtIndex(source!, i, options) else {
+                return nil
+            }
+            if count == 1 {
+                //只有一张图片时
+                gifDuration = Double.infinity//无穷大
+            }else {
+                // Animated GIF
+                guard let properties = CGImageSourceCopyPropertiesAtIndex(source!, i, nil), let gifinfo = (properties as NSDictionary)[kCGImagePropertyGIFDictionary as String] as? NSDictionary  else {
+                    return nil
+                }
+                gifDuration += frameDuration(from: gifinfo)
+            }
+            images.append(UIImage.init(cgImage: imageRef, scale: UIScreen.main.scale, orientation: .up))
+        }
+        
+        return (images, gifDuration)
+    }
+    
+    
     
     
     override func didReceiveMemoryWarning() {
