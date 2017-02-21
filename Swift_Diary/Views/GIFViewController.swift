@@ -126,8 +126,7 @@ class GIFViewController: UIViewController {
         webview.loadFileURL(URL.init(fileURLWithPath: path!), allowingReadAccessTo: Bundle.main.resourceURL!)
         */
         
-        /*
-        let (images, duration) = showGif(path: path)!
+        let (images, duration) = showGif()!
 //        let animatedImage = UIImage.animatedImage(with: images, duration: duration)
         imageView = UIImageView.init(image: images.first)
         
@@ -138,9 +137,6 @@ class GIFViewController: UIViewController {
         imageView?.animationDuration = duration
         imageView?.animationRepeatCount = 3
         imageView?.startAnimating()
-        */
-        
-        compoundGif()
     }
 
     //每个参数的类型都要标明，因为它们不能被推断出来。如果您在某个参数类型前面加上了 inout ，那么这个参数 就可以在这个函数作用域当中被修改。
@@ -170,8 +166,8 @@ class GIFViewController: UIViewController {
     }
     
     // MARK: - ImageIO
-    private func showGif(path: String?) ->([UIImage], TimeInterval)? {
-        
+    private func showGif() ->([UIImage], TimeInterval)? {
+        let path = Bundle.main.path(forResource: "timg", ofType: "gif")
         let data = try? Data.init(contentsOf: URL.init(fileURLWithPath: path!))
         let source = CGImageSourceCreateWithData(data as! CFData, nil)
         let count = CGImageSourceGetCount(source!)
@@ -208,58 +204,8 @@ class GIFViewController: UIViewController {
         return (images, gifDuration)
     }
     
-    // MARK: - GIF的合成
-    private func compoundGif() {
-        
-        let bundlePath = Bundle.main.path(forResource: "images", ofType: "bundle")
-        print("bundlePath === \(bundlePath)")
-        var images = [UIImage]()
-        
-        for i in 1 ..< 10 {
-            let path = bundlePath?.appending("/\(i).tiff")
-            let image = UIImage.init(contentsOfFile: path!)
-            images.append(image!)
-        }
-        
-        //构建在Document目录下的GIF文件路径
-        let docs = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let documentsDirectory = docs[0] as String
-        let gifPath = documentsDirectory+"/mine.gif"
-        print("gifPath === \(gifPath)")
-        
-        let url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, gifPath as CFString, CFURLPathStyle.cfurlposixPathStyle, false)
-        let destion = CGImageDestinationCreateWithURL(url!, kUTTypeGIF, images.count, nil)
-        //CGImageDestinationCreateWithURL方法的作用是创建一个图片的目标对象，为了便于大家理解，这里把图片目标对象比喻为一个集合体。 
-        //集合体中描述了构成当前图片目标对象的一系列参数，如图片的URL地址、图片类型、图片帧数、配置参数等。本代码中将plane.gif的本地文件路径作为参数1传递给这个图片目标对象，参数2描述了图片的类型为GIF图片，参数3表明当前GIF图片构成的帧数，参数4暂时给它一个空值。
-        
-        //设置gif图片属性，利用9张tiff图片构建gif
-        let cgimagePropertiesDic = [kCGImagePropertyGIFDelayTime as String: 0.1]//设置每帧之间播放时间
-        let cgimagePropertiesDestDic = [kCGImagePropertyGIFDictionary as String: cgimagePropertiesDic]
-        
-        for cgimage in images {
-            // 依次为gif图像对象添加每一帧元素
-            CGImageDestinationAddImage(destion!, cgimage.cgImage!, cgimagePropertiesDestDic as CFDictionary?)
-        }
-        let gifPropertiesDic:NSMutableDictionary = NSMutableDictionary()
-        gifPropertiesDic.setValue(kCGImagePropertyColorModelRGB, forKey: kCGImagePropertyColorModel as String)
-        gifPropertiesDic.setValue(16, forKey:kCGImagePropertyDepth as String)// 设置图像的颜色深度
-        gifPropertiesDic.setValue(3, forKey:kCGImagePropertyGIFLoopCount as String)// 设置Gif执行次数, 0则为无限执行
-        gifPropertiesDic.setValue(NSNumber.init(booleanLiteral: true), forKey: kCGImagePropertyGIFHasGlobalColorMap as String)
-        let gifDictionaryDestDic = [kCGImagePropertyGIFDictionary as String: gifPropertiesDic]
-        CGImageDestinationSetProperties(destion!, gifDictionaryDestDic as CFDictionary?)//为gif图像设置属性
-        
-        CGImageDestinationFinalize(destion!)//最后释放 目标对象 destion
-        
-        //生成GIF图片成功
-        
-        //测试一下显示GIF图片
-        let (images2, duration) = showGif(path: gifPath)!
-        let animatedImage = UIImage.animatedImage(with: images2, duration: duration)
-        imageView = UIImageView.init(image: animatedImage)
-        
-        self.view.addSubview(imageView!)
-        imageView?.center = self.view.center
-    }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
